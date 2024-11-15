@@ -1,23 +1,26 @@
-import app from './app.js';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import express from 'express';
+import connectDB from './config/db.js';
+import userRoutes from './routes/userRoutes.js';
+import postRoutes from './routes/postRoutes.js'
 
-dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Connect to the database
+connectDB();
+
+// Middleware
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  console.log('Welcome to Social Media API')
+})
+
+app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
 
 
-const PORT = process.env.PORT || 3000;
-
-export const connectDb = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error.message);
-    process.exit(1); // Exit the process if the connection fails
-  }
-};
-
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
-  console.log(`Server started on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
