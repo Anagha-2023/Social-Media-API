@@ -1,8 +1,8 @@
-## Social Media API ##
+# Social Media API
 A simple backend API for a social media application, built with Express.js, MongoDB, and Mongoose.
 
 
-# Features
+## Features
 
 1. User registration and login with JWT authentication
 2. Create, read, update, and delete posts
@@ -11,28 +11,28 @@ A simple backend API for a social media application, built with Express.js, Mong
 5. User Profile image 
 6. commends on post
 
-# Clone the Repository
+## Clone the Repository
 https://github.com/Anagha-2023/Social-Media-API
 
-# Navigate to Project directory
+## Navigate to Project directory
 cd social-media-API
 
-# Install Dependencies
+## Install Dependencies
 npm install
 
-# Set up ENV
+## Set up ENV
 MONGO_URI=mongodb://127.0.0.1:27017/social-media-API
 PORT=3000
 JWT_SECRET=Anagha@123
 
-# Start server
+## Start server
 npm start (Production)
 npm run Dev (Development)
 
-# Testing
+## Testing
 npm test
 
-# API ENDPOINTS
+## API ENDPOINTS
 
 ### User Management
 - `POST /api/users/register`: Register a new user
