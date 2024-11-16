@@ -1,13 +1,17 @@
+import mongoose from "mongoose";
 import Post from "../models/Post.js";
 
 export const createPost = async (req, res) => {
   try {
     const { title, content } = req.body;
+    console.log(req.body)
     const post = new Post({
       title,
       content,
       userId: req.user.userId
     });
+    console.log(post);
+    
     await post.save();
     return res.status(201).json({post});
   } catch (error) {
@@ -49,9 +53,10 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   try {
-    const {id} = req.params;
-    const post = await Post.findById(id);
-
+    const {postId} = req.params;
+    console.log("Req.params",req.params)
+    const post = await Post.findById((postId));
+    console.log(post)
     if(!post) {
       return res.status(404).json({message:'Post not found'});
     }
@@ -59,7 +64,7 @@ export const deletePost = async (req, res) => {
     if(post.userId.toString() !== req.user.userId) {
       return res.status(403).json({message:'You are not authorized to delete this post'});
     }
-    await post.delete();
+    await post.deleteOne();
     return res.status(204).json({message:'Post Deleted'});
   } catch (error) {
     return res.status(400).json({message:error.message})
@@ -68,15 +73,45 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   try {
-    const {id} = req.params;
-    const post = Post.findById(id);
-    if(!post) {
-      return res.status(404).json({message:'Post not found'})
+    const { id } = req.params;
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
     }
-    post.likes+=1;
+
+    // Toggle like: Increment likes and decrement dislikes if previously disliked
+    if (post.likes < 1) {
+      post.likes += 1;
+      post.dislikes = Math.max(post.dislikes - 1, 0); // Ensure dislikes are not negative
+    }
+
     await post.save();
-    return res.status(200).json({likes: post.likes});
+    return res.status(200).json({ likes: post.likes, dislikes: post.dislikes });
   } catch (error) {
-    return res.status(400).json({message:error.message})
+    return res.status(400).json({ message: error.message });
   }
-}
+};
+
+export const dislikePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Toggle dislike: Increment dislikes and decrement likes if previously liked
+    if (post.dislikes < 1) {
+      post.dislikes += 1;
+      post.likes = Math.max(post.likes - 1, 0); // Ensure likes are not negative
+    }
+
+    await post.save();
+    return res.status(200).json({ likes: post.likes, dislikes: post.dislikes });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { hashedPassword, comparePassword } from '../utils/bcrypt.js'; // Use named import
+import { hashedPassword } from '../utils/bcrypt.js';  // Use named import for hashedPassword
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
 
 // Hash the password before saving it to the database
 userSchema.pre('save', async function (next) {
-  this.password = await bcrypt.hashedPassword(this.password);
+  if (this.isModified('password')) {
+    this.password = await hashedPassword(this.password);  // Use hashedPassword
+  }
   next();
 });
 
