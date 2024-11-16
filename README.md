@@ -8,8 +8,8 @@ A simple backend API for a social media application, built with Express.js, Mong
 2. Create, read, update, and delete posts
 3. Like/dislike post functionality
 4. Unit tests for user management endpoints
-5. User Profile image 
-6. commends on post
+5. User Profile image (Optional also added in my project)
+6. commends on post (Optional also added in my project)
 
 ## Clone the Repository
 https://github.com/Anagha-2023/Social-Media-API
