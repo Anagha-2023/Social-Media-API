@@ -37,6 +37,8 @@ npm test
 ### User Management
 - `POST /api/users/register`: Register a new user
 - `POST /api/users/login`: Login a user
+- `POST /api/users/upload`: Add profile for user
+
 
 ### Post Management
 - `POST /api/posts`: Create a new post
@@ -44,3 +46,5 @@ npm test
 - `PUT /api/posts/:id`: Update a post
 - `DELETE /api/posts/:id`: Delete a post
 - `POST /api/posts/:id/like`: Like/dislike a post
+- `POST /api/posts/:id/dislike`: Like/dislike a post
+- `POST /api/posts/:id/comment`: comment in a post
