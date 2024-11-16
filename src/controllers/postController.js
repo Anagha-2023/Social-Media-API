@@ -115,3 +115,26 @@ export const dislikePost = async (req, res) => {
   }
 };
 
+export const addComment = async (req, res) => {
+  try {
+    const {id} =  req.params; // Post ID
+    const {content} = req.body; // comment content
+
+    const post = await Post.findById(id);
+    if(!post) {
+      return res.status(404).json({message:'Post not found'})
+    }
+
+    const comment = {
+      userId: req.user.userId,
+      content,
+     }
+
+     post.comments.push(comment);
+     await post.save();
+
+     return res.status(201).json({ message:'Comment added Successfully',comment})
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
