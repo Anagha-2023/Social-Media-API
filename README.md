@@ -21,9 +21,9 @@ cd social-media-API
 npm install
 
 ## Set up ENV
-MONGO_URI=mongodb://127.0.0.1:27017/social-media-API
-PORT=3000
-JWT_SECRET=Anagha@123
+1. MONGO_URI=mongodb://127.0.0.1:27017/social-media-API
+2. PORT=3000
+3. JWT_SECRET=Anagha@123
 
 ## Start server
 npm start (Production)
